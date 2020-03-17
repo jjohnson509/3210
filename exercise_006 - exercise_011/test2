@@ -1,0 +1,16 @@
+main()
+def main()
+	for x = s(3)+1 to e()
+		print(x)
+		nl()
+	end
+	return 0
+end
+
+def s(a)
+	return a*a
+end
+
+def e()
+	return 20
+end

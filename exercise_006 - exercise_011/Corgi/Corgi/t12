@@ -1,0 +1,7 @@
+main(3)
+
+def main( x )
+  "Hello!"
+  print(sqrt(x)) nl()
+  return 0
+end

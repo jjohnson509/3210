@@ -1,0 +1,9 @@
+main()
+
+def main()
+   for x = 3 to 10
+	print(4)
+	nl()
+   end
+   return 0
+end

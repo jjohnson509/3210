@@ -1,0 +1,11 @@
+main()
+def main()
+	"Enter n: "
+	n = input()
+	for x = 1 to n
+		for s = 1 to x
+			"*"
+		end
+		nl()
+	end
+end

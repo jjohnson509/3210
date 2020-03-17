@@ -1,0 +1,15 @@
+main()
+
+def main()
+  "starting main"
+  return 0
+end
+
+def f( x )
+  print(x)
+  return 0
+end
+
+def g( x, y)
+   return 0
+end

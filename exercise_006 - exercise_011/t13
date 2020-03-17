@@ -1,0 +1,14 @@
+print(f(3))
+
+def f(a)
+   print(a)
+   temp = g(a+10)
+   return temp
+end
+
+def g(x)
+   "at start of g, x = "  print(x) nl()
+   "enter a new value for x: "
+   x = input()
+   return x*x
+end

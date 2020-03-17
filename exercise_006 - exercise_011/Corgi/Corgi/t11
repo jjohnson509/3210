@@ -1,0 +1,6 @@
+main()
+
+def main(x)
+   "Hello!"
+   return 0
+end

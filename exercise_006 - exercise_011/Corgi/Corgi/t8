@@ -1,0 +1,17 @@
+main()
+
+def main()
+   x = input()
+   print( abs(x) )
+   return 0
+end
+
+def abs(a)
+   if lt(a,0)
+      a = a+1
+      return -a
+   else
+      a = a-1
+      return a
+   end
+end

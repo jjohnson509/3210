@@ -1,0 +1,15 @@
+main()
+
+def main()
+  "starting main" nl()
+  "enter a number: "
+  a = input()
+  b = -3*a+1
+  print( f(a,b) )  nl()
+  return 0
+end
+
+def f(x,y)
+  temp = x*x-y*y
+  return temp
+end

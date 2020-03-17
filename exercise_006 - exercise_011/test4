@@ -1,0 +1,23 @@
+main()
+
+def main()
+   f(10)
+   return 0
+end
+
+def f(n)
+	if eq(n,0)
+		return 0
+	else
+		stars(n) nl()
+		f(n - 1)
+	end
+	return 0
+end
+
+def stars(a)
+	for x = 0 to a-1
+		"*"
+	end
+	return 0
+end

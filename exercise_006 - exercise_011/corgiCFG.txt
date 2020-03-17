@@ -1,0 +1,55 @@
+Context Free Grammar for Corgi:
+( <program> is the start symbol )
+---------------------------------------------------------------
+
+<program> -> <funcCall> | <funcCall> <funcDefs>
+
+<funcDefs> -> <funcDef> | <funcDef> <funcDefs>
+
+<funcDef> ->  def <var> ( ) end |
+              def <var> ( ) <statements> end
+              def <var> ( <params> ) end |
+              def <var> ( <params> ) <statements> end
+
+<params> -> <var> | <var> , <params>
+
+<statements> -> <statement> | 
+                <statement> <statements>
+
+<funcCall> -> <var> ( ) |
+              <var> ( <args> )
+
+<args> -> <expr> | <expr> , <args>
+
+<statement> ->  <string> |
+                <var> = <expr> |
+                <funcCall> |
+                if <expr> else end |
+                if <expr> else <statements> end |
+                if <expr> <statements> else end |
+                if <expr> <statements> else <statements> end |
+		for <var> = <expr> to <expr> end |
+		for <var> = <expr> to <expr> <statements> end |
+                return <expr>
+
+<expr> -> <term> | <term> + <expr> | <term> - <expr>
+<term> -> <factor> | <factor> * <term> | <factor> / <term>
+
+<factor> -> <num> | <var> |
+            ( <expr> ) |
+            - <factor> |
+            <funcCall>
+---------------------------------------------------------------
+
+
+Notes:
+
+  slightly bizarre but cool:  in Corgi you can just type a string anywhere
+  as a statement and it gets sent to the console (still have to use 
+  print( <expr> ) to send a number)
+
+  no boolean type---use "non-zero is true, 0 is false"
+
+  there's only the if-else---always have to use it
+
+  no loop statements---use recursion!

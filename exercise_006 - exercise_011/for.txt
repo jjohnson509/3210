@@ -1,0 +1,9 @@
+main()
+
+def main()
+  for index = 1 to 10
+    print(index)
+    nl()
+    end
+return 0
+end

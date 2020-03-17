@@ -1,0 +1,13 @@
+main()
+
+def main()
+  "starting main"  nl()
+  "enter a number: "
+  a = input()
+  print( f(a) )  nl()
+  return 0
+end
+
+def f( x )
+  return 2*x+1
+end
