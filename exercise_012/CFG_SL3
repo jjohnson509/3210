@@ -1,0 +1,13 @@
+<defs> -> | <def> <defs>
+
+<def> -> LPAREN DEFINE LPAREN NAME RPAREN <expr> RPAREN |
+         LPAREN DEFINE LPAREN NAME <params> RPAREN <expr> RPAREN
+
+<params> -> NAME | NAME <params>
+
+<expr> -> NUMBER | NAME | <list>
+
+<list> -> LPAREN RPAREN | 
+          LPAREN <items> RPAREN
+
+<items> -> <expr> | <expr> <items>

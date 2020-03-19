@@ -15,7 +15,7 @@ public class Parser {
 
       // look ahead to see if there are more funcDef's
       Token token = lex.getNextToken();
-
+      
       if ( token.isKind("eof") ) {
          return new Node( "Defs", first, null, null );
       }
@@ -65,23 +65,81 @@ public class Parser {
   public Node parseParams(){
     System.out.println("-----> parsing <params>:")
     Token token = lex.getNextToken();
+    errorCheck( token, "name");
+
+    Node first = new Node("name", token.getDetails(), null, null, null);
+
+    token = lex.getNextToken();
+    if(token.isKind("rparen")){
+      lex.putBackToken(token);
+      return new Node("params", first, null, null);
+    }
+    else if(token.isKind("name")){
+      Node second = parseParams();
+      return new Node("params", first, second, null);
+    }
+    else{
+      System.out.println("expected 'name' or ) and saw " + token );
+      System.exit(1);
+      return null;
+    }
   }
 
   public Node parseExpr(){
     System.out.println("-----> parsing <expr>:")
     Token token = lex.getNextToken();
+    if(token.isKind("number")){
+      return new Node("number", token.getDetails(), null, null, null);
+    }
+    else if(token.isKind("name")){
+      return new Node("name", token.getDetails(), null, null, null);
+    }
+    else if(token.isKind("lparen")){
+      lex.putBackToken(token);
+      Node first = parseList();
+      return first;
+    }
+    else if(token.isKind("rparen")){
+      return null;
+    }
+
+    else{
+      System.out.println("expected <list> and saw " + token);
+      System.exit(1);
+      return null;
+    }
 
   }
 
   public Node parseList(){
     System.out.println("-----> parsing <list>:")
     Token token = lex.getNextToken();
+    errorCheck(token, "lparen");
+    token = lex.getNextToken();
+    if(token.isKind("rparen")){
+      return new Node("list", token.getDetails(), null, null, null)
+    }
+    else{
+      lex.putBackToken(token);
+      Node first = parseItems();
+      return first;
+    }
   }
 
   public Node parseItems(){
     System.out.println("-----> parsing <items>:")
     Token token = lex.getNextToken();
-
+    Node first = parseExpr();
+    token = lex.getNextToken();
+    if(token.isKind("lparen") || token.isKind("num") || token.isKind("name")){
+      lex.putBackToken(token);
+      Node second = parseItems();
+      return new Node("items", first, second, null);
+    }
+    else{
+      //lex.putBackToken(token);
+      return first;
+    }
   }
 
   private void errorCheck( Token token, String kind ) {
