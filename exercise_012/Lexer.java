@@ -108,14 +108,15 @@ public class Lexer {
             Token token; //generates token depending on stopping state
 
             if (state == 2) {
-                if (data.equals("define") || data.equals("plus") || data.equals("minus") ||
-                        data.equals("times") || data.equals("div") || data.equals("lt") ||
-                        data.equals("le") || data.equals("eq") || data.equals("ne") ||
-                        data.equals("and") || data.equals("or") || data.equals("not") ||
-                        data.equals("ins") || data.equals("first") || data.equals("rest") ||
-                        data.equals("null") || data.equals("num") || data.equals("list") ||
-                        data.equals("read") || data.equals("write") || data.equals("nl") ||
-                        data.equals("quote") || data.equals("quit")) {
+                if (data.equals("define") || 
+                      //  data.equals("plus") || data.equals("minus") ||
+                      //  data.equals("times") || data.equals("div") || data.equals("lt") ||
+                      //  data.equals("le") || data.equals("eq") || data.equals("ne") ||
+                      //  data.equals("and") || data.equals("or") || data.equals("not") ||
+                      //  data.equals("ins") || data.equals("first") || data.equals("rest") ||
+                      //  data.equals("null") || data.equals("num") || data.equals("list") ||
+                      //  data.equals("read") || data.equals("write") || data.equals("nl") || data.equals("quote") ||
+                      data.equals("quit")) {
                     return new Token(data, "");
                 } else {
                     return new Token("name", data);
