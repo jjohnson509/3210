@@ -93,7 +93,7 @@ public class Node {
      return children;
   }
 
-/*
+
   //******************************************************
   // graphical display of this node and its subtree
   // in given camera, with specified location (x,y) of this
@@ -144,7 +144,7 @@ System.out.println("has " + number + " children");
     System.out.println( message );
     System.exit(1);
   }
-*/
+
    // ===============================================================
    //   execute/evaluate nodes
    // ===============================================================
@@ -155,34 +155,58 @@ System.out.println("has " + number + " children");
 
 //      System.out.println("Executing node " + id + " of kind " + kind );
 
-      if ( kind.equals("program") ) {
-         root = this;  // note the root node of entire tree
-         first.execute();  // execute the "main" funcCall
-      }// program
+      if ( kind.equals("defs") ) { 
+        if (id == 0){
+          root = this;  // note the root node of entire tree
+        }
+        first.execute();  // execute the "def" funcCall
+        if ( second != null && !returning ) {
+          second.execute();
+        }
+      }// defs
 
-      else if ( kind.equals("stmts") ) {
+      else if ( kind.equals("def") ) { 
+         String defName = info;
          first.execute();
          // returning is a flag saying that first 
          // wants to return, so don't do this node's second
          if ( second != null && !returning ) {
             second.execute();
          }
-      }// stmts
-      else if (kind.equals("for")) {
-         if (first != null) {
-            table.store(info, first.evaluate());
-         }
-         while (table.retrieve(info) <= second.evaluate()) {
-            third.execute();
-            table.store(info, table.retrieve(info) +1);
-         }
-      } // end for
+      }// def
 
-      else if ( kind.equals("funcCall") ) {
+      else if ( kind.equals("params") ) {
          // execute a function call as a statement
-         
-         String funcName = info;
+         first.evaluate();
+         if ( second != null && !returning ) {
+            second.execute();
+         }
+      }
 
+      else if( kind.equals("expr")){
+          if(kind.equals("list")){
+            first.execute();
+          }
+          else{
+            evaluate();
+          }
+      }
+
+      else if( kind.equals("list")){
+         if ( first != null ) {
+            first.execute();
+         }
+         
+      }
+
+      else if(kind.equals("items")){
+        first.execute();
+        if ( second != null && !returning ) {
+            second.execute();
+        }
+      }
+      /*
+      else if(kind.equals("funcCall")){
          // handle bifs
          if ( funcName.equals("print") ) {
             // evaluate the single <expr>
@@ -249,23 +273,23 @@ System.out.println("has " + number + " children");
       else {
          error("Executing unknown kind of node [" + kind + "]");     
       }
-
+		*/
    }// execute
-    
+   
    // compute and return value produced by this node
    public double evaluate() {
 
 //      System.out.println("Evaluating node " + id + " of kind " + kind );
-
+      /*
       if ( kind.equals("var") ) {
          return table.retrieve( info );
       }// var
-
+      */
       else if ( kind.equals("num") ) {
          return Double.parseDouble( info );
       }
-
-      else if ( kind.equals("+") || kind.equals("-") ) {
+      /*
+      else if ( kind.equals("plus") || kind.equals("minus") ) {
          double value1 = first.evaluate();
          double value2 = second.evaluate();
          if ( kind.equals("+") )
@@ -287,8 +311,8 @@ System.out.println("has " + number + " children");
           double value = first.evaluate();
           return -value;
        }
-
-       else if ( kind.equals("funcCall") ) {
+      */
+       else if ( kind.equals("name") ) {
           // execute a function call to produce a value
 
          String funcName = info;
@@ -375,12 +399,11 @@ System.out.println("has " + number + " children");
 
    }// evaluate
 
-   private final static String[] bif0 = { "input", "nl" };
-   private final static String[] bif1 = { "sqrt", "cos", "sin", "atan", 
-                             "round", "trunc", "not" };
-   private final static String[] bif2 = { "lt", "le", "eq", "ne", "pow",
-                                          "or", "and"
-                                        };
+   private final static String[] bif0 = { "read", "nl", "quit" };
+   private final static String[] bif1 = { "not", "first", "rest", "null", 
+                                          "num", "list", "write", "quote" };
+   private final static String[] bif2 = { "plus", "minus", "times", "div", "lt",
+                                          "le", "and", "eq", "ne", "or", "ins" };
 
    // return whether target is a member of array
    private static boolean member( String target, String[] array ) {

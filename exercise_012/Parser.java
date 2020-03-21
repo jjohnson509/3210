@@ -48,7 +48,7 @@ public class Parser {
       Node first = parseExpr();
       token = lex.getNextToken();
       errorCheck(token, "rparen");
-      return new Node("def", name.getDetails(), first, null, null);
+      return new Node("def", name.getDetails(), first, null, null); //maybe change to second, if issues
     }
     else{
       lex.putBackToken(token);
@@ -123,7 +123,7 @@ public class Parser {
     else{
       lex.putBackToken(token);
       Node first = parseItems();
-      return first;
+      return new Node("list", token.getDetails(), first, null, null);
     }
   }
 
@@ -140,7 +140,7 @@ public class Parser {
 
     else{
       //lex.putBackToken(token);
-      return first;
+      return new Node("items", first, null, null);
     }
   }
 
