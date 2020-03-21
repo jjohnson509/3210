@@ -29,8 +29,8 @@ public class Project1
     int opcode;
 
     ArrayList<IntPair> labels, holes;
-    labels = new ArrayList<IntPair>();
-    holes = new ArrayList<IntPair>();
+    labels = new ArrayList<>();
+    holes = new ArrayList<>();
     int label;
 
     int k=0;
