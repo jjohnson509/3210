@@ -154,11 +154,12 @@ System.out.println("has " + number + " children");
    public void execute() {
 
 //      System.out.println("Executing node " + id + " of kind " + kind );
-
+      if (kind.equals("start") ) {
+        root = this;
+        first.execute();
+      }
+      
       if ( kind.equals("defs") ) { 
-        if (id == 0){
-          root = this;  // note the root node of entire tree
-        }
         first.execute();  // execute the "def" funcCall
         if ( second != null && !returning ) {
           second.execute();
@@ -285,7 +286,7 @@ System.out.println("has " + number + " children");
          return table.retrieve( info );
       }// var
       */
-      else if ( kind.equals("num") ) {
+      if ( kind.equals("num") ) {
          return Double.parseDouble( info );
       }
       /*
@@ -323,8 +324,12 @@ System.out.println("has " + number + " children");
          // handle bifs
 
          if ( member( funcName, bif0 ) ) {
-            if ( funcName.equals("input") )
+            if ( funcName.equals("read") )
                value =  keys.nextDouble();
+            else if ( funcName.equals("nl") )
+               System.out.print("\n");
+            else if ( funcName.equals("quit") )
+               System.exit(1);
             else {
                error("unknown bif0 name [" + funcName + "]");
                value = -1;
@@ -333,20 +338,41 @@ System.out.println("has " + number + " children");
          else if ( member( funcName, bif1 ) ) {
             double arg1 = first.first.evaluate();
 
-            if ( funcName.equals("sqrt") )
-               value = Math.sqrt( arg1 );
-            else if ( funcName.equals("cos") )
-               value = Math.cos( Math.toRadians( arg1 ) );
-            else if ( funcName.equals("sin") )
-               value = Math.sin( Math.toRadians( arg1 ) );
-            else if ( funcName.equals("atan") )
-               value = Math.toDegrees( Math.atan( arg1 ) );
-            else if ( funcName.equals("round") )
-               value = Math.round( arg1 );
-            else if ( funcName.equals("trunc") )
-               value = (int) arg1;
-            else if ( funcName.equals("not") )
+            if ( funcName.equals("not") )
                value = arg1 == 0 ? 1 : 0;
+            else if ( funcName.equals("first") )
+               if ( arg1[0] == null )
+                error("list " + arg1 + " is empty");
+               else {
+                value = arg1[0];
+               }
+            else if ( funcName.equals("rest") )
+               double[] args = new Array[arg1.length - 1];
+               int i = 1;
+               while ( i < arg1.length )
+                args[i - 1] = arg1[i];
+            else if ( funcName.equals("null") )
+               if ( arg1[0] == null )
+                value = 1;
+               else {
+                value = 0;
+               }
+            else if ( funcName.equals("num") )
+               if ( arg1.isKind("num") )
+                value = 1;
+               else {
+                value = 0;
+               }
+            else if ( funcName.equals( "list") )
+               if ( arg1.isKind("list") )
+                value = 1;
+               else {
+                value = 0;
+               }
+            else if ( funcName.equals("write") )
+               System.out.print(arg1 + " ");
+            else if ( funcName.equals("quote"))
+               value = arg1;
             else {
                error("unknown bif1 name [" + funcName + "]");
                value = -1;
@@ -364,12 +390,20 @@ System.out.println("has " + number + " children");
                value = arg1 == arg2 ? 1 : 0;
             else if ( funcName.equals("ne") ) 
                value = arg1 != arg2 ? 1 : 0;
-            else if ( funcName.equals("pow") ) 
-               value = Math.pow( arg1 , arg2 );
-            else if ( funcName.equals("and") ) 
-               value = arg1!=0 && arg2!=0 ? 1 : 0;
+            else if ( funcName.equals("plus") ) 
+               value = arg1 + arg2;
+            else if ( funcName.equals("minus") ) 
+               value = arg1 - arg2;
             else if ( funcName.equals("or") ) 
                value = arg1!=0 || arg2!=0 ? 1 : 0;
+						else if ( funcName.equals("times"))
+							 value = arg1 * arg2;
+						else if ( funcName.equals("div"))
+							 value = arg1 / arg2;
+						else if ( funcName.equals("and"))
+							 value = arg1 != 0 && arg2 != 0 ? 1 : 0;
+						else if ( funcName.equals("ins"))
+							 return 
             else {
                error("unknown bif2 name [" + funcName + "]");
                value = -1;

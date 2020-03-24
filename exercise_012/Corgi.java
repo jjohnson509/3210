@@ -19,7 +19,7 @@ public class Corgi {
       Parser parser = new Parser( lex );
 
       // start with <statements>
-      Node root = parser.parseDefs();
+      Node root = parser.parseStart();
 
       // display parse tree for debugging/testing:
       TreeViewer viewer = new TreeViewer("Parse Tree", 0, 0, 800, 500, root );

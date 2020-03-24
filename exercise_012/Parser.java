@@ -9,6 +9,12 @@ public class Parser {
     lex = lexer;
   }
 
+    public Node parseStart(){
+    System.out.println("-----> parsing <start>");
+    Node first = parseDefs();
+    return new Node("start", first, null, null);
+  }
+
   public Node parseDefs(){
       System.out.println("-----> parsing <defs>:");
       Node first = parseDef();
